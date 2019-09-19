@@ -571,8 +571,8 @@ function Base() {
             '</footer-background>' +
             '</footer>',
 
-        rHref = 'https://github.com/'+window.cnblogsConfig.GhUserName+'/'+window.cnblogsConfig.GhRepositories+'/,
-        lHref = 'https://github.com/'+window.cnblogsConfig.GhUserName+'/'+window.cnblogsConfig.GhRepositories+'/;
+        rHref = 'https://github.com/'+window.cnblogsConfig.GhUserName+',
+        lHref = 'https://github.com/'+window.cnblogsConfig.GhUserName+';
 
         addFooterHtml();
         setBlogroll();
@@ -632,10 +632,10 @@ function Base() {
         // 设置加载主题信息
         function setTheme() {
 
-            $('#themeInfo').html('Theme version: <a href="'+lHref
+            $('#themeInfo').html('繁星大本营<a href="'+lHref
                 +'" target="_blank" style="color: #888;text-decoration: underline;">'
                 +(window.cnblogsConfigDefault.CnVersions).substring(0,7)+'</a>'
-                +' / Loading theme version: <a href="'+rHref
+                +' / Loading 当前版本: <a href="'+rHref
                 +'" target="_blank" style="color: #888;text-decoration: underline;">'
                 +(window.cnblogsConfigDefault.GhVersions).substring(0,7)+'</a>'
             );
