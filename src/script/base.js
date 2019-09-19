@@ -571,8 +571,10 @@ function Base() {
             '</footer-background>' +
             '</footer>',
 
+
         rHref = 'https://github.com/'+window.cnblogsConfig.GhUserName+'/',
         lHref = 'https://github.com/'+window.cnblogsConfig.GhUserName+'/';
+
 
         addFooterHtml();
         setBlogroll();
@@ -632,10 +634,12 @@ function Base() {
         // 设置加载主题信息
         function setTheme() {
 
+
             $('#themeInfo').html('繁星天堂: <a href="'+lHref
                 +'" target="_blank" style="color: #888;text-decoration: underline;">'
                 +(window.cnblogsConfigDefault.CnVersions).substring(0,7)+'</a>'
                 +' / Loading 版本: <a href="'+rHref
+
                 +'" target="_blank" style="color: #888;text-decoration: underline;">'
                 +(window.cnblogsConfigDefault.GhVersions).substring(0,7)+'</a>'
             );
