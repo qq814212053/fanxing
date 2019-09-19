@@ -557,7 +557,7 @@ function Base() {
         if (window.cnblogsConfig.bottomText.left || window.cnblogsConfig.bottomText.right)
             pvHtml += '<div>【'+window.cnblogsConfig.bottomText.left+'<span id="footerTextIcon">'+window.cnblogsConfig.bottomText.icon+'</span>'+window.cnblogsConfig.bottomText.right+'】</div>';
 
-        pvHtml += "<div><span id='blogRunTimeSpan'></span><span class='my-face'>ღゝ◡╹)ノ♡</span></div>" +
+        pvHtml += "<div><span id='blogRunTimeSpan'></span><span class='my-face'>O(∩_∩)O♡</span></div>" +
             '<div id="blogrollInfo"></div>' +
             '<div id="cnzzInfo"></div>' +
             '<div id="themeInfo"></div>';
