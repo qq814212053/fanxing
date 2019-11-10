@@ -638,7 +638,7 @@ function Base() {
             $('#themeInfo').html('繁星天堂: <a href="'+lHref
                 +'" target="_blank" style="color: #888;text-decoration: underline;">'
                 +(window.cnblogsConfigDefault.CnVersions).substring(0,7)+'</a>'
-                +' / Loading 版本: <a href="'+rHref
+                +' /  版本: <a href="'+rHref
 
                 +'" target="_blank" style="color: #888;text-decoration: underline;">'
                 +(window.cnblogsConfigDefault.GhVersions).substring(0,7)+'</a>'
