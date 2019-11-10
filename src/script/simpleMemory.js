@@ -84,7 +84,7 @@ if (initCheck()) {
     window.cnblogsConfigDefault = {
         GhUserName: 'BNDong',
         GhRepositories: 'Cnblogs-Theme-SimpleMemory',
-        GhVersions: 'v1.1.2',
+        GhVersions: 'v1.1.8',
         CnVersions: "",
         blogUser: "",
         blogAvatar: "",
