@@ -1,75 +1,78 @@
 $(document).ready(function () {
-    var b = $('body'),
+    let b = $('body'),
         c = 'cnblogs_post_body',
-        d = 'sideToolbar',
         e = 'sideCatalog',
         f = 'sideCatalog-catalog',
         g = 'sideCatalogBtn',
-        h = 'sideToolbar-up',
         i = '<div id="sideToolbar"style="display:none;">\<div class="sideCatalogBg"id="sideCatalog">\<div id="sideCatalog-sidebar">\<div class="sideCatalog-sidebar-top"></div>\<div class="sideCatalog-sidebar-bottom"></div>\</div>\<div id="sideCatalog-catalog">\<ul class="nav"style="width:230px;zoom:1">\</ul>\</div>\</div>\<a href="javascript:void(0);"id="sideCatalogBtn"class="sideCatalogBtnDisable"></a>\</div>',
         j = '',
-        k = 200,
         l = 0,
         m = 0,
         n = 0,
-        o, p = 18,
+        o,
         q = true,
-        r = true,
-        s = $('#' + c);
+        r = false,
+        s = $('#' + c),
+       tools = new myTools;
 
-    if (s.length === 0) { return };
-    b.append(i);
+    if (s.length === 0) return;
+    b.append(i); o = s.find(':header');
+    if (o.length === 0) return;
 
-    o = s.find(':header');
+    // 开始获取页面顶级标题
+    let topLev = (s.find('h1').length ? 1 : false)
+        || (s.find('h2').length ? 2 : false)
+        || (s.find('h3').length ? 3 : false)
+        || (s.find('h4').length ? 4 : false)
+        || (s.find('h5').length ? 5 : false)
+        || (s.find('h6').length ? 6 : false);
+    if (!topLev || topLev > 4) return;
 
-    var titleArr = [];
-    o.each(function () {
-        var u = $(this),
+    let topHT = 'h' + topLev, topTwHT = 'h' + (topLev + 1);
+
+    o.each(function (ii) {
+        let u = $(this),
             v = u[0];
-        if ($.inArray((v.tagName.toLowerCase()), ["h1", "h2"]) === -1) return true;
-        
-        var lserialNum = u.find('.dev__fe').text(),
-            rserialNum = u.find('.dev__ux').text(),
-            titleContent = u.find('.dev__developer').text(),
-            titleHre  = titleContent.replace(/\s/g,'__a__');
+        if ($.inArray((v.tagName.toLowerCase()), [topHT, topTwHT]) === -1) return true;
 
-        var titleRex = titleHre.match(/[A-Z a-z 0-9 \. \_ \- \u4E00-\u9FA5\uF900-\uFA2D]/g);
-        titleHre = titleRex.join('').toLowerCase();
+        let lserialNum   = u.find('.dev__fe').length  > 0 ? u.find('.dev__fe').text() : null,
+            rserialNum   = u.find('.dev__ux').length > 0  ? u.find('.dev__ux').text() : null,
+            titleContent = u.find('.dev__developer').length > 0 ? u.find('.dev__developer').text() : u.text(),
+            titleId      = u.attr('tid'),
+            hId          = u.attr('id');
 
-        titleArr.push(titleHre);
+        if (!titleId) {
+            titleId = tools.randomString(6);
+            u.attr('tid', 'tid-' + titleId);
+            titleId = 'tid-' + titleId;
+        }
 
-        var titleVal = countTitleHre(titleHre),
-            titleHreText = titleHre.replace(/__a__/g,'-');
+        if (!hId) {
+            hId = 'hid-' + tools.randomString(6);
+            u.attr('id', hId);
+        }
 
-        u.attr('id', titleVal === 0 ? titleHreText : titleHreText + '-' + titleVal);
+        if (v.localName === topHT) {
+            l++; m = 0; r = true;
+            if(titleContent.length > 26) titleContent = titleContent.substr(0,26) + "...";
+            titleContent = tools.HTMLEncode(titleContent);
 
-        if (v.localName === 'h1') {
-            l++; m = 0;
-            if(titleContent.length>26) titleContent=titleContent.substr(0,26) + "...";
+            let itemText = lserialNum === null && rserialNum === null ? titleContent : lserialNum + '.' + rserialNum + '&nbsp;&nbsp;' + titleContent;
 
-            j += '<li h="1" g="'+ lserialNum +'"><a href="#' + u.attr('id') + '">' + lserialNum + '.' + rserialNum + '&nbsp;&nbsp;' + titleContent + '</a><span class="sideCatalog-dot"></span></li>';
-        } else if (v.localName === 'h2') {
+            j += '<li h="'+topLev+'" g="'+ (lserialNum === null ? l : lserialNum) +'"><a href="#'+hId+'" goto="' + titleId + '" onclick="return false;">' + itemText + '</a><span class="sideCatalog-dot"></span></li>';
+        } else if (r && v.localName === topTwHT) {
             m++; n = 0;
             if(q){
 
-                if(titleContent.length>30) titleContent=titleContent.substr(0,30) + "...";
+                if(titleContent.length>30) titleContent = titleContent.substr(0,30) + "...";
+                titleContent = tools.HTMLEncode(titleContent);
+                let itemText = lserialNum === null && rserialNum === null ? titleContent : lserialNum + '.' + rserialNum + '&nbsp;&nbsp;' + titleContent;
 
-                j += '<li h="2" g="'+ lserialNum +'" class="h2Offset ceg'+lserialNum+'"><a href="#' + u.attr('id') + '">' + lserialNum + '.' + rserialNum + '&nbsp;&nbsp;' + titleContent + '</a></li>';
+                j += '<li h="'+(topLev+1)+'" g="'+ (lserialNum === null ? l : lserialNum) +'" ' +
+                    'class="h2Offset ceg'+ (lserialNum === null ? l : lserialNum) +'"><a href="#'+hId+'" goto="' + titleId + '" onclick="return false;">' + itemText + '</a></li>';
             }
         }
     });
-
-    function countTitleHre(titleHre) {
-        var num = 0;
-        if ($.inArray(titleHre, titleArr) === -1) return num;
-
-        $.each(titleArr, function (i) {
-            if (titleArr[i] === titleHre) {
-                num++;
-            }
-        });
-        return num > 0 ? num - 1 : 0;
-    }
 
     $('#' + f + '>ul').html(j);
     b.data('spy', 'scroll');
@@ -78,37 +81,27 @@ $(document).ready(function () {
     b.scrollspy({
         target: '.sideCatalogBg'
     });
-    $sideCatelog = $('#' + e);
+    let $sideCatelog = $('#' + e);
 
-    $('#' + g).on('click', function () {
-        if ($(this).hasClass('sideCatalogBtnDisable') && $sideCatelog.css('visibility') === 'visible') {
-            $sideCatelog.css('visibility', 'hidden');
-            $(this).removeClass('sideCatalogBtnDisable');
-        } else {
-            $sideCatelog.css('visibility', 'visible');
-            $(this).addClass('sideCatalogBtnDisable');
-        }
+    $('#' + f + '>ul>li').click(function () {
+        let obj = $(this), title, titleH = $(':header[tid="'+obj.find('a').attr('goto')+'"]'),
+        titleParent = titleH.parent('span.header__span');
+        title = titleParent.length > 0 ? titleParent : titleH;
+
+        title.length && tools.actScroll(title.offset().top + 3, 500);
     });
 
-    $('#' + h).on('click', function () {
-        $("html,body").animate({
-            scrollTop: 0
-        }, 500)
-    });
+    let nav_li = $('#sideCatalog-catalog').find('ul li');
 
-    $sideToolbar = $('#' + d);
-
-    var nav_li = $('#sideCatalog-catalog').find('ul li');
-    
     if (nav_li.length === 0) {
         $sideCatelog.css('visibility', 'hidden');
         $('#' + g).removeClass('sideCatalogBtnDisable');
     }
 
     nav_li.on('activate.bs.scrollspy', function () {
-        var gu = $(this).attr("g"),
+        let gu = $(this).attr("g"),
             catalog = $('#sideCatalog-catalog');
-        catalog.find('.h2Offset').hide();
-        catalog.find('.ceg' + gu).show();
+            catalog.find('.h2Offset').hide();
+            catalog.find('.ceg' + gu).show();
     })
 });

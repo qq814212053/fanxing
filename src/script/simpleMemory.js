@@ -4,6 +4,7 @@
  * @author: BNDong, dbnuo@foxmail.com
  **/
 if (initCheck()) {
+
     var sidebarHtml =
         '<div class="container">' +
         '    <div class="menu-wrap optiscroll" id="menuWrap" style="display:none">' +
@@ -26,27 +27,36 @@ if (initCheck()) {
         '            <!-- 找找看 -->' +
         '            <div class="m-list-title"><span>找找看</span></div>' +
         '            <div class="m-icon-list" id="sb-sidebarSearchBox"></div>' +
+        '            <!-- 积分与排名 -->' +
+        '            <div class="m-list-title"><span>积分排名<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
+        '            <div class="m-icon-list" id="sb-sidebarScorerank"></div>' +
         '            <!-- 最新随笔 -->' +
-        '            <div class="m-list-title"><span>最新随笔</span></div>' +
+        '            <div class="m-list-title"><span>最新随笔<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
         '            <div class="m-icon-list" id="sb-sidebarRecentposts"></div>' +
         '            <!-- 我的标签 -->' +
-        '            <div class="m-list-title"><span>我的标签</span></div>' +
+        '            <div class="m-list-title"><span>我的标签<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
         '            <div class="m-icon-list" id="sb-toptags"></div>' +
         '            <!-- 随笔分类 -->' +
-        '            <div class="m-list-title"><span>随笔分类</span></div>' +
+        '            <div class="m-list-title"><span>随笔分类<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
         '            <div class="m-icon-list" id="sb-classify"></div>' +
-        '            <!-- 随笔档案 -->' +
-        '            <div class="m-list-title"><span>随笔档案</span></div>' +
-        '            <div class="m-icon-list" id="sb-record"></div>' +
-        '            <!-- 文章档案 -->' +
-        '            <div class="m-list-title"><span>文章档案</span></div>' +
-        '            <div class="m-icon-list" id="sb-articlearchive"></div>' +
+        '            <!-- 文章分类 -->' +
+        '            <div class="m-list-title"><span>文章分类<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
+        '            <div class="m-icon-list" id="sb-ArticleCategory"></div>' +
         '            <!-- 阅读排行 -->' +
-        '            <div class="m-list-title"><span>阅读排行</span></div>' +
+        '            <div class="m-list-title"><span>阅读排行<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
         '            <div class="m-icon-list" id="sb-topview"></div>' +
         '            <!-- 推荐排行 -->' +
-        '            <div class="m-list-title"><span>推荐排行</span></div>' +
+        '            <div class="m-list-title"><span>推荐排行<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
         '            <div class="m-icon-list" id="sb-topDiggPosts"></div>' +
+        '            <!-- 最新评论 -->' +
+        '            <div class="m-list-title"><span>最新评论<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
+        '            <div class="m-icon-list" id="sb-recentComments"></div>' +
+        '            <!-- 文章档案 -->' +
+        '            <div class="m-list-title"><span>文章档案<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
+        '            <div class="m-icon-list" id="sb-articlearchive"></div>' +
+        '            <!-- 随笔档案 -->' +
+        '            <div class="m-list-title"><span>随笔档案<span class="iconfont icon-select m-list-title-select"></span></span></div>' +
+        '            <div class="m-icon-list" id="sb-record"></div>' +
         '            <!-- 自定义列表 -->' +
         '            <span id="menuCustomList"></span>' +
         '        </nav>' +
@@ -64,8 +74,7 @@ if (initCheck()) {
         '    <canvas id="notHomeTopCanvas"></canvas>' +
         '    <div class="vertical">' +
         '        <div class="main-header-content inner">' +
-        '            <link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">' +
-        '            <h1 class="page-title" style="font-family: \'Playball\', cursive;" id="homeTopTitle"></h1>' +
+        '            <h1 class="page-title" id="homeTopTitle"></h1>' +
         '            <h2 class="page-description" id="hitokoto"></h2>' +
         '            <h3 class="page-author" id="hitokotoAuthor"></h3>' +
         '            <h1 class="sb-title" id="sbTitle"></h1>' +
@@ -84,11 +93,11 @@ if (initCheck()) {
     window.cnblogsConfigDefault = {
         GhUserName: 'BNDong',
         GhRepositories: 'Cnblogs-Theme-SimpleMemory',
-        GhVersions: 'v1.1.8',
-        CnVersions: "v1.1.8",
+        GhVersions: 'v1.3.0',
+        CnVersions: "",
         blogUser: "",
         blogAvatar: "",
-        blogStartDate: "2017-01-01",
+        blogStartDate: "2019-01-01",
         menuCustomList: {},
         menuNavList: [],
         menuUserInfoBgImg: '',
@@ -97,7 +106,6 @@ if (initCheck()) {
         webpageTitleFocus: "(*´∇｀*) 欢迎回来！",
         webpageTitleFocusTimeOut: 1000,
         webpageIcon: "",
-        footerStyle: 1,
         fontIconExtend: "",
         progressBar: {
             id: 'top-progress-bar',
@@ -144,6 +152,7 @@ if (initCheck()) {
             trailMaxLength: 30,
             trailIntervalCreation: 100,
             delayBeforeDisappear: 2,
+            colorsRandom: false,
             colors: [
                 '#96EDA6', '#5BC6A9',
                 '#38668C', '#374D84',
@@ -165,15 +174,23 @@ if (initCheck()) {
             animateSections: true
         },
         homeTopImg: [
-            "https://raw.githubusercontent.com/BNDong/Cnblogs-Theme-SimpleMemory/master/img/home_top_bg.jpg"
+            "https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/home_top_bg.webp"
         ],
         homeBannerText: "",
         homeBannerTextType: "jinrishici",
         essayTopImg: [
-            "https://raw.githubusercontent.com/BNDong/Cnblogs-Theme-SimpleMemory/master/img/nothome_top_bg.jpg"
+            "https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/nothome_top_bg.webp"
         ],
         essayCodeHighlightingType: 'cnblogs',
         essayCodeHighlighting: '',
+        essayCodeLanguages: [],
+        essayCode: {
+            fontFamily: "'Ubuntu Mono',monospace",
+            fontSize: "14px",
+        },
+        codeMaxHeight: false,
+        codeLineNumber: false,
+        essayTitleStyle: false,
         essaySuffix: {
             codeImgUrl: '',
             aboutHtml: '',
@@ -182,74 +199,81 @@ if (initCheck()) {
         },
         bottomBlogroll: [],
         bottomText: {
-            icon: "❤️",
+            iconFont: {
+                icon:  "icon-xl",
+                color: "red",
+                fontSize: "16px"
+            },
             left: "",
-            right: ""
+            right: "",
         },
+        footerStyle: 2,
         consoleList: [],
+        bookList: [],
         themeAuthor: false,
+        isVersionMapping: false,
+        switchDayNight: {
+            enable: true,
+            auto: {
+                enable: false,
+                dayHour: 5,
+                nightHour: 19
+            }
+        },
+        reward: {
+            enable: false,
+            wechatpay: '',
+            alipay: ''
+        },
+        weChatOfficialAccounts: '',
+        advertising: true,
+    };
+
+    window.cnblogsConfigDefault.hook = {
+
+        // loading 开始前
+        beforeLoading: function (loading) {
+            // console.log('beforeLoading');
+        },
+
+        // loading 结束后
+        afterLoading: function (e, loading) {
+            // console.log('afterLoading');
+        },
+
+        // 页面标签变化
+        pageLabelChanges: function (e, text) {
+            // console.log('pageLabelChanges');
+        },
+
+        // 渲染代码开始前
+        beforeCodeHighlighting: function (e) {
+            // console.log('beforeCodeHighlighting');
+        },
+
+        // 渲染代码结束后
+        afterCodeHighlighting: function (e) {
+            // console.log('afterCodeHighlighting');
+        },
+
+        // 日夜间模式设置
+        dayNightControl: function (e, type) {
+            // console.log('dayNightControl');
+        },
+
+        // 页面初始化结束
+        pageInitEnd: function (e) {
+            // console.log('pageInitEnd');
+        },
     };
 
     window.cnblogsConfig = $.extend( true, window.cnblogsConfigDefault, window.cnblogsConfig );
     getVersionConfig();
 
-    // set sidebar html
-    var url = window.location.href,tmp = [];
-    tmp = url.split("/");
-    var user = tmp[3];
-    var navListHtml = '<li><a href="https://www.cnblogs.com/'+user+'/" target="_self">首页</a></li>' +
-    '<li><a href="https://msg.cnblogs.com/send/'+user+'" target="_blank">联系</a></li>' +
-    '<li><a href="https://www.cnblogs.com/'+user+'/rss" target="_blank">订阅</a></li>' +
-    '<li><a href="https://i.cnblogs.com/" target="_blank">管理</a></li>';
-
-    var menuNavList = window.cnblogsConfig.menuNavList;
-    if (menuNavList.length > 0) {
-        $.each(menuNavList, function (i) {
-            navListHtml += '<li><a href="'+(menuNavList[i][1])+'" target="_blank">'+(menuNavList[i][0])+'</a></li>';
-        });
-    }
-
-    $('#blog-news').prepend(sidebarHtml);
-    $('#m-nav-list').append(navListHtml);
-
-    // set userName
-    if (window.cnblogsConfig.blogUser === "") window.cnblogsConfig.blogUser = user;
-
-    // start cache
-    $.ajaxSetup({cache: true});
-
-    // load loadingJs
-    $.getScript(getJsDelivrUrl('loading.js'), function () {
-
-        // Loading start
-        pageLoading.initRebound();
-        pageLoading.initSpinner();
-        pageLoading.spinner.init(pageLoading.spring, true);
-
-        $.getScript(getJsDelivrUrl('jquery.mCustomScrollbar.min.js'), function () {
-            $.getScript(getJsDelivrUrl('require.min.js'), function () {
-                $.getScript(getJsDelivrUrl('config.js'), function () {
-                    var staticResource = [
-                        'optiscroll', 'ToProgress', 'rotate',
-                        'snapSvg', 'classie', 'main4', 'tools'];
-                    require(staticResource, function() {
-                        require(['base'], function() {
-                            (new Base).init();
-                        });
-                    });
-                });
-            });
-        });
-    });
-
 } else {
 
     $('a[name="top"]').text("SimpleMemory：基础配置有误，请阅读文档，检查配置！").css({
-        'display': 'block',
-        'text-align': 'center',
-        'padding-top': '45vh',
-        'font-size': '20px',
-        'color': '#333'
+        'display': 'block', 'text-align': 'center', 'padding-top': '45vh', 'font-size': '20px', 'color': '#333'
     });
 }
 
@@ -269,37 +293,139 @@ function initCheck() {
 
 // get version config
 function getVersionConfig() {
-    var url = 'https://raw.githubusercontent.com/' + window.cnblogsConfigDefault.GhUserName + '/' + window.cnblogsConfigDefault.GhRepositories + '/master/version.conf';
 
-    $.ajax({
-        type: "get",
-        url: url,
-        dataType: "text",
-        async: false,
-        success: function(conf)
-        {
-            var confObj = conf ? JSON.parse(conf) : false;
-            var confVersion = getEndConfVal(window.cnblogsConfigDefault.GhVersions);
-            window.cnblogsConfigDefault.CnVersions = window.cnblogsConfigDefault.GhVersions;
+    window.cnblogsConfig.CnVersions = window.cnblogsConfig.GhVersions;
 
-            if (confVersion) {
-                window.cnblogsConfigDefault.GhVersions = confVersion;
+    if (window.cnblogsConfig.isVersionMapping) {
+        var url = 'https://raw.githubusercontent.com/' + window.cnblogsConfig.GhUserName + '/' + window.cnblogsConfig.GhRepositories + '/master/version.conf';
+
+        $.ajax({
+            type: "get",
+            url: url,
+            dataType: "text",
+            async: false,
+            success: function(conf)
+            {
+                window.themeVersion = conf ? JSON.parse(conf) : false;
+                window.themeVersion && setConfVersion();
             }
+        });
 
-            function getEndConfVal(thisGhVersion) {
-                var endVal = '';
-                confObj && $.each(confObj, function (i) {
-                    if (confObj[i][0] === thisGhVersion) {
-                        endVal = confObj[i][1];return false;
-                    }
-                });
-                if (endVal === '') {
-                    return thisGhVersion;
-                } else {
-                    return getEndConfVal(endVal);
-                }
-            }
+    } else if(window.cnblogsConfig.GhUserName === 'BNDong') {
+        window.themeVersion = [
+            [
+                "v1.1.6",
+                "d8adfb50252062f658350bda29d7145f5eff0b80"
+            ]
+            ,
+            [
+                "v1.1.8",
+                "461aab69de17a84f0af9ff0c326bfcb94438b06c"
+            ]
+            ,
+            [
+                "v1.2.2",
+                "08eab99303d7c463a495adabd8feccc784a8507d"
+            ]
+            ,
+            [
+                "v1.2.3",
+                "36901bf16e2aa3656d4e6f78d44486273b0b8972"
+            ]
+            ,
+            [
+                "v1.2.4",
+                "9354db2147c11fc56cfe02a502f1f8229332fc2f"
+            ]
+            ,
+            [
+                "v1.2.5",
+                "4d744f980758500078df349520472e3b360fb841"
+            ]
+        ];
+        setConfVersion();
+    } else {
+        init();
+    }
+
+    function setConfVersion() {
+        var confVersion = getEndConfVal(window.cnblogsConfig.GhVersions);
+
+        if (confVersion) {
+            window.cnblogsConfig.GhVersions = confVersion;
         }
+
+        init();
+    }
+
+    function getEndConfVal(thisGhVersion) {
+        var endVal = '';
+        window.themeVersion && $.each(window.themeVersion, function (i) {
+            if (window.themeVersion[i][0] === thisGhVersion) {
+                endVal = window.themeVersion[i][1]; return false;
+            }
+        });
+        if (endVal === '') {
+            return thisGhVersion;
+        } else {
+            return getEndConfVal(endVal);
+        }
+    }
+}
+
+// init
+function init() {
+
+    // set sidebar html
+    var url = window.location.href,tmp = [];
+    tmp = url.split("/");
+    var user = tmp[3];
+    var navListHtml = '<li><a href="https://www.cnblogs.com/'+user+'/" target="_self"><i class="iconfont icon-homepage_fill"></i>首页</a></li>' +
+        '<li><a href="https://msg.cnblogs.com/send/'+user+'" target="_blank"><i class="iconfont icon-zhifeiji"></i>联系</a></li>' +
+        '<li><a href="javascript:void(0)" onclick="$(\'#blog_nav_rss\').trigger(\'click\');" data-rss="https://www.cnblogs.com/'+user+'/rss/"><i class="iconfont icon-qinmifu"></i>订阅</a></li>' +
+        '<li><a href="https://i.cnblogs.com/" target="_blank"><i class="iconfont icon-setup_fill"></i>管理</a></li>';
+
+    var menuNavList = window.cnblogsConfig.menuNavList;
+    if (menuNavList.length > 0) {
+        $.each(menuNavList, function (i) {
+            let iconClass = menuNavList[i].length > 2 ? menuNavList[i][2] : "icon-qianzishenhe";
+            navListHtml += '<li><a href="'+(menuNavList[i][1])+'" target="_blank"><i class="iconfont '+iconClass+'"></i>'+(menuNavList[i][0])+'</a></li>';
+        });
+    }
+
+    $('#blog-news').prepend(sidebarHtml);
+    $('#m-nav-list').append(navListHtml);
+
+    // set userName
+    if (window.cnblogsConfig.blogUser === "") window.cnblogsConfig.blogUser = user;
+
+    // start cache
+    $.ajaxSetup({cache: true});
+
+    // load loadingJs
+    $.getScript(getJsDelivrUrl('loading.js'), function () {
+
+        // Loading start
+        window.cnblogsConfig.hook.beforeLoading(pageLoading);
+        pageLoading.initRebound();
+        pageLoading.initSpinner();
+        pageLoading.spinner.init(pageLoading.spring, true);
+
+        $.getScript(getJsDelivrUrl('lib/jquery.mCustomScrollbar.min.js'), function () {
+            $.getScript(getJsDelivrUrl('lib/require.min.js'), function () {
+                $.getScript(getJsDelivrUrl('config.js'), function () {
+                    var staticResource = [
+                        // 'optiscroll', 'ToProgress', 'rotate',
+                        'optiscroll_ToProgress_rotate',
+                        'snapSvg', 'classie', 'main4', 'tools'];
+                    require(staticResource, function() {
+                        require(['base'], function() {
+                            (new Base).init();
+                        });
+                    });
+                });
+            });
+        });
     });
 }
 
